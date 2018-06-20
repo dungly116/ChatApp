@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="final_lab.Views.YouTubeSearch"
+             xmlns:prismBehaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             IsBusy="{Binding ShowIsBusySpinner}"
+             Title="{Binding Title}">
+    Title="{Binding Title}">
+    <StackLayout        
+        >
+        <Label 
+            x:Name="youtube" 
+            Text="Search Youtube" 
+            TextColor="White"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+        <Entry 
+            x:Name="searchBar" 
+            Text="{Binding SearchBarText}"
+            BackgroundColor="White" />
+
+        <Button
+            x:Name="searchButton"
+            BackgroundColor="White"
+            Text="SEARCH"
+            TextColor="Black"
+            Command="{Binding Search_Clicked}" />
+
+        <ListView ItemsSource="{Binding Videos}"
+                  IsRefreshing="{Binding ShowIsBusySpinner}"
+                  SeparatorVisibility="Default"
+                  SeparatorColor="HotPink"    
+                  IsPullToRefreshEnabled="false"
+                  RefreshCommand="{Binding PullToRefreshCommand}"
+                 >
+            <ListView.Behaviors>
+                <prismBehaviors:EventToCommandBehavior
+                    EventName="ItemTapped"
+                    Command="{Binding VideoTappedCommand}" 
+                    EventArgsParameterPath="Item"/>
+            </ListView.Behaviors>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <StackLayout>
+                                <Label x:Name="Title" Text="{Binding Title}" TextColor="Black"></Label>
+                            </StackLayout>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
